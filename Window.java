@@ -29,17 +29,23 @@ public class Window extends Application{
 
         Box box1 = new Box(300, 50, 20);
         TextField calcLine = new TextField();
+        TextField calcOutput = new TextField();
         Button calculate = new Button("CALCULATE");
 
         box1.setMaterial(new PhongMaterial(Color.BLACK));
-        calcLine.setLayoutX(0);//Doesn't position calcLine
-        calcLine.setLayoutY(0);//Doesn't position calcLine
+        calcOutput.setEditable(false);
+        calcOutput.setVisible(false);
+
+        //restrict the characters allowed within the textbox.
 
         calculate.setOnAction(new EventHandler<ActionEvent>() {//WHEN THE BUTTON IS CLICKED
             @Override
             public void handle(ActionEvent actionEvent) {
                 Arithmetic.setLine(calcLine);//THE LINE VARIABLE WILL TAKE THE VALUE FROM THE TEXT
                 Arithmetic.setTokens();
+                Arithmetic.calculate();
+                calcOutput.setText(Arithmetic.getAnswer());
+                calcOutput.setVisible(true);
             }
         });
 
@@ -51,6 +57,7 @@ public class Window extends Application{
         shapes.getChildren().add(box1);
         shapes.getChildren().add(calcLine);
         shapes.getChildren().add(calculate);
+        shapes.getChildren().add(calcOutput);
 
         Scene scene = new Scene(shapes);
         primaryStage.setScene(scene);
